@@ -1,3 +1,92 @@
 body {
-    background-color: aqua;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Cor de fundo */
+    font-family: 'Arial', sans-serif; /* Fonte */
+    color: #333; /* Cor do texto */
+    line-height: 1.6; /* Altura da linha */
+}
+.content {
+    max-width: var(--main-page-width);
+    margin: calc(var(--spacing) * 2) auto;
+    padding: var(--spacing);
+    background-color: var(--clr-white);
+    box-shadow: 2px 2px 5px var(--clr-dark-shadow); 
+    border-radius: var(--default-border-radius);  
+}
+/* Estilos gerais da tabela */
+.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.table-caption {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.table-row-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-header {
+    background-color: #f2f2f2;
+    padding: 15px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    flex: 1;
+    text-align: center;
+}
+
+.table-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-cel {
+    padding: 15px;
+    border: 1px solid #ddd;
+    flex: 1;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .responsive-table, .thead, .tbody, .th, .td, .tr {
+        display: block;
+    }
+
+    .table-row {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .table-header {
+        display: none;
+    }
+
+    .table-cel {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table-cel:before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 50%;
+        display: inline-block;
+    }
+
+    .table-cel {
+        display: block;
+        text-align: right;
+    }
 }
