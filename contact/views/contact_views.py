@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, redirect
+from django.db.models import Q
 from contact.models import Contact
 
 def index(request):
-    contacts = Contact.objects.filter(show=True).order_by('-id')
+    contacts = Contact.objects.filter(show=True).order_by('-id')[:10]
 
     context = {
         'contacts': contacts,
@@ -11,22 +12,32 @@ def index(request):
     return render(request, 'contact/index.html',context)
 
 def contact(request, contact_id):
-    # Contact.objects.get(pk=contact_id)
-    single_contact = get_list_or_404(
-        Contact.objects.filter(id=contact_id, show=True)
-    )
-    site_title = f'{single_contact.first_name} {single_contact.last_name} - '
+    single_contact = Contact.objects.get(pk=contact_id,show=True)
+    # single_contact = get_list_or_404(Contact, pk=contact_id)
+    site_title =f'{single_contact.first_name}{single_contact.last_name}-'
     context = {
-        'contacts': single_contact,
-        'site_title': site_title,
+        'contact': single_contact,
+        'site_title' : site_title
+
     }
     return render(request, 'contact/contact.html',context)
 
 def search(request):
-    contacts = Contact.objects.filter(show=True).order_by('-id')
+    search_value = request.GET.get('q','').strip()
+    if search_value == '':
+        return redirect('contact:index')
+
+    contacts = Contact.objects\
+        .filter(show=True)\
+        .filter(Q(first_name__icontains=search_value)|
+                Q(last_name__icontains=search_value) |
+                Q(phone__icontains=search_value) |
+                Q(email__icontains=search_value) 
+                )\
+        .order_by('-id')
 
     context = {
         'contacts': contacts,
-        'site_title': 'Contatos - ',
+        'site_title': 'Search - ',
     }
     return render(request, 'contact/index.html',context)
