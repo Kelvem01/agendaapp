@@ -109,12 +109,12 @@ svg{
 .content{
     max-width: var(--main-page-width);
     display: flex;
-    justify-content: center;
     padding: var(--spacing);
     background: var(--clr-white);
     box-shadow: 2px 2px 5px var(--clr-dark-shadaw-20);
     border-radius: var(--default-border-radius);
     position: absolute;
+    align-items: center;
     top: 45%;
     left: 5%;
     right: 5%;
